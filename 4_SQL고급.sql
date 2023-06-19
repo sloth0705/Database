@@ -13,7 +13,7 @@ CREATE TABLE `Member` (
 );
 
 CREATE TABLE `Department` (
-	`dpNo` INT PRIMARY KEY,
+	`depNo` INT PRIMARY KEY,
 	`name` VARCHAR(10) NOT NULL,
 	`tel` CHAR(12) NOT NULL
 );
@@ -210,16 +210,83 @@ GROUP BY `uid`, `year`
 ORDER BY `year` ASC, `합계` DESC;
 
 #실습 4-13
+SELECT * FROM `Sales` 
+INNER JOIN `Member` 
+ON `Sales`.uid = `Member`.uid;
 
+SELECT * FROM `Member`
+INNER JOIN `Department` 
+ON `Member`.dep = `Department`.depNo;
+
+SELECT * FROM `Sales` AS a
+JOIN `Member` AS b
+ON a.uid = b.uid;
+
+SELECT * FROM `Member` AS a
+JOIN `Department` AS b
+ON a.dep = b.depNo;
+
+SELECT * FROM `Sales` AS a, `Member` AS b
+WHERE a.uid = b.uid;
+
+SELECT * FROM `Member` AS a, `Department` AS b
+WHERE a.dep = b.depNo;
+
+SELECT a.`seq`, a.`uid`, a.`sale`, b.`name`, b.`pos`
+FROM `Sales` AS a
+JOIN `Member` AS b
+ON a.uid = b.uid;
+
+SELECT a.`seq`, a.`uid`, a.`sale`, b.`name`, b.`pos`
+FROM `Sales` AS a
+JOIN `Member` AS b
+USING(`uid`);
+
+SELECT a.`seq`, a.`uid`, a.`sale`, b.`name`, b.`pos`
+FROM `Sales` AS a
+JOIN `Member` AS b
+ON a.uid = b.uid
+WHERE a.`sale` >= 100000;
+
+SELECT *
+FROM `Sales` AS a
+JOIN `Member` AS b ON a.uid = b.uid
+JOIN `Department` AS c ON b.dep = c.depNo;
 
 #실습 4-14
+INSERT INTO `Sales` (`uid`,`year`,`month`,`sale`) 
+VALUES('p101', 2018, 1, 35000);
 
+SELECT * 
+FROM `Sales` AS a 
+LEFT JOIN `Member` AS b
+ON a.uid = b.uid;
+
+SELECT * 
+FROM `Sales` AS a 
+RIGHT JOIN `Member` AS b
+ON a.uid = b.uid;
 
 #실습 4-15
-
+SELECT a.`uid`, a.`name`, a.`pos`, b.`name`
+FROM `Member` AS a
+JOIN `Department` AS b
+ON a.dep = b.depNo;
 
 #실습 4-16
-
+SELECT SUM(`sale`)
+FROM `Member` AS a
+JOIN `Sales` AS b
+ON a.uid = b.uid
+WHERE a.`name` = '김유신' AND b.`year` = 2019
+GROUP BY b.`year`;
 
 #실습 4-17
-
+SELECT b.`name`, c.`name`, b.`pos`, a.`year`, SUM(`sale`) AS `매출` 
+FROM `Sales` AS a
+JOIN `Member` AS b ON a.uid = b.uid
+JOIN `Department` AS c ON b.dep = c.depNo
+WHERE a.`year` = 2019 AND a.`sale` >= 50000
+GROUP BY a.`uid`
+HAVING `매출` >= 100000
+ORDER BY `매출` DESC;
