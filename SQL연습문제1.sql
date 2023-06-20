@@ -77,9 +77,8 @@ SELECT * FROM `Product`;
 SELECT `company` FROM `Product`;
 
 #실습 1-8
-SELECT `company` 
-FROM `Product` 
-GROUP BY `company`;
+SELECT DISTINCT`company` 
+FROM `Product`;
 
 #실습 1-9
 SELECT `prodName`, `price` FROM `Product`;
