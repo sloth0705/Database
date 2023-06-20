@@ -87,10 +87,14 @@ SELECT `prodName`, `price` FROM `Product`;
 SELECT `prodName`, (`price` + 500) AS `조정단가` FROM `Product`;
 
 #실습 1-11
-SELECT `prodName`, `stock`, `price` FROM `Product` WHERE `company` = '오리온';
+SELECT `prodName`, `stock`, `price` 
+FROM `Product` 
+WHERE `company` = '오리온';
 
 #실습 1-12
-SELECT `orderProduct`, `orderCount`, `orderDate` FROM `Order` WHERE `orderId` = 'c102';
+SELECT `orderProduct`, `orderCount`, `orderDate` 
+FROM `Order` 
+WHERE `orderId` = 'c102';
 
 #실습 1-13
 SELECT `orderProduct`, `orderCount`, `orderDate` 
@@ -98,13 +102,19 @@ FROM `Order`
 WHERE `orderId` = 'c102' AND `orderCount` >= 2;
 
 #실습 1-14
-SELECT * FROM `Product` WHERE `price` >= 1000 AND `price` <= 2000;
+SELECT * 
+FROM `Product` 
+WHERE `price` BETWEEN 1000 AND 2000;
 
 #실습 1-15
-SELECT `custId`, `name`, `hp`, `addr` FROM `Customer` WHERE `name` LIKE '김%';
+SELECT `custId`, `name`, `hp`, `addr` 
+FROM `Customer` 
+WHERE `name` LIKE '김%';
 
 #실습 1-16
-SELECT `custId`, `name`, `hp`, `addr` FROM `Customer` WHERE `name` LIKE '__';
+SELECT `custId`, `name`, `hp`, `addr` 
+FROM `Customer` 
+WHERE `name` LIKE '__';
 
 #실습 1-17
 SELECT * FROM `Customer` WHERE `hp` IS NULL;
@@ -158,7 +168,7 @@ GROUP BY `orderNo`
 order BY `orderProduct` ASC;
 
 #실습 1-29
-SELECT a.`orderId`, b.`prodName`
+SELECT `orderId`, `prodName`
 FROM `Order` AS a
 JOIN `Product` AS b ON a.`orderProduct` = b.`prodNo`
 WHERE `orderId` = 'c102';
@@ -168,4 +178,4 @@ SELECT `orderId`, `name`, `prodName`, `orderDate`
 FROM `Order` AS a
 JOIN `Customer` AS b ON a.`orderId` = b.`custId`
 JOIN `Product` AS c ON a.`orderProduct` = c.`prodNo`
-WHERE `orderDate` LIKE '%07-03%';
+WHERE SUBSTR(`orderDate`, 1, 10) = '2022-07-03';
